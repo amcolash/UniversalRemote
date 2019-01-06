@@ -9,45 +9,69 @@ const computerPower = document.getElementById("computerPower");
 
 const onlineEl = document.getElementById("online");
 const offlineEl = document.getElementById("offline");
+const refresh = document.getElementById("refresh");
 
 var onlineState = false;
 var computerState = false;
+var timeout;
 
 // When things load, set things up
 window.onload = init;
 
 function init() {
     // Setup service worker
-    if (navigator.serviceWorker) {
-        navigator.serviceWorker.register('service-worker.js', {
-            scope: '/'
-        });
-    }
+    // if (navigator.serviceWorker) {
+    //     navigator.serviceWorker.register('service-worker.js', {
+    //         scope: '/'
+    //     });
+    // }
 
     // Setup click handlers
-    projectorOn.addEventListener("click", () => { axios.get(server + "/projector_on"); });
-    projectorOff.addEventListener("click", () => { axios.get(server + "/projector_off"); });
-    stereoPower.addEventListener("click", () => { axios.get(server + "/stereo"); });
-    stereoVolumeDown.addEventListener("click", () => { axios.get(server + "/stereo_down"); });
-    stereoVolumeUp.addEventListener("click", () => { axios.get(server + "/stereo_up"); });
-    computerPower.addEventListener("click", () => { axios.get(server + (computerState ? "/off" : "/on")); });
+    projectorOn.addEventListener("click", () => { request("/projector_on", projectorOn); });
+    projectorOff.addEventListener("click", () => { request("/projector_off", projectorOff); });
+    stereoPower.addEventListener("click", () => { request("/stereo", stereoPower); });
+    stereoVolumeDown.addEventListener("click", () => { request("/stereo_down?volume=-2", stereoVolumeDown); });
+    stereoVolumeUp.addEventListener("click", () => { request("/stereo_up?volume=2", stereoVolumeUp); });
+    computerPower.addEventListener("click", () => { request(computerState ? "/off" : "/on", computerPower); });
+    refresh.addEventListener('click', getStatus);
 
     // Render SVG
     feather.replace();
 
     // Poll for status
     getStatus();
-    setInterval(getStatus, 5000);
+}
+
+function request(url, button) {
+    // Only do the request if there are no active requests
+    if (document.getElementsByClassName("spin").length > 0) return;
+
+    button.classList.add("spin");
+    axios.get(server + url).then(response => {
+        button.classList.remove("spin");
+
+        if (button === computerPower) getStatus();
+    }).catch(error => {
+        button.classList.remove("spin");
+    });
 }
 
 function getStatus() {
+    if (timeout) clearTimeout(timeout);
+
+    refresh.classList.add("spin");
+
     axios.get(server).then(response => {
         computerState = response.data.trim() === "Current Status: 1";
         computerPower.getElementsByTagName("svg")[0].classList = computerState ? "green" : "red";
         setOnline(true);
+
+        timeout = setTimeout(getStatus, 10000);
     }).catch(error => {
         console.error(error);
         setOnline(false);
+
+        timeout = setTimeout(getStatus, 10000);
     });
 }
 
@@ -55,4 +79,5 @@ function setOnline(online) {
     onlineState = online;
     onlineEl.style.display = online ? "block" : "none";
     offlineEl.style.display = online ? "none" : "block";
+    refresh.classList.remove("spin");
 }

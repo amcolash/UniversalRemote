@@ -14,30 +14,36 @@
             <div class="section">
                 <h2>Projector</h2>
                 <div class="button" id="projectorOn">
-                    <i data-feather="power" class="green"></i>
+                    <i data-feather="power" class="green icon"></i>
+                    <i data-feather="refresh-cw" class="loading"></i>
                 </div>
                 <div class="button" id="projectorOff">
-                    <i data-feather="power" class="red"></i>
+                    <i data-feather="power" class="red icon"></i>
+                    <i data-feather="refresh-cw" class="loading"></i>
                 </div>
             </div>
             
             <div class="section">
                 <h2>Stereo</h2>
                 <div class="button" id="streroPower">
-                    <i data-feather="power"></i>
+                    <i data-feather="power" class="icon"></i>
+                    <i data-feather="refresh-cw" class="loading"></i>
                 </div>
                 <div class="button" id="stereoVolumeDown">
-                    <i data-feather="volume-1"></i>
+                    <i data-feather="volume-1" class="icon"></i>
+                    <i data-feather="refresh-cw" class="loading"></i>
                 </div>
                 <div class="button" id="stereoVolumeUp">
-                    <i data-feather="volume-2"></i>
+                    <i data-feather="volume-2" class="icon"></i>
+                    <i data-feather="refresh-cw" class="loading"></i>
                 </div>
             </div>
         
             <div class="section">
                 <h2>Computer</h2>
                 <div class="button" id="computerPower">
-                    <i data-feather="power"></i>
+                    <i data-feather="power" class="icon"></i>
+                    <i data-feather="refresh-cw" class="loading"></i>
                 </div>
                 <!-- Forced for computer? -->
             </div>
@@ -46,6 +52,11 @@
         <div id="offline" style="display: none">
             <h1>It looks like you are offline or cannot contact the server :(</h1>
             <i data-feather="wifi-off" width="4.5em" height="4.5em"></i>
+            <br>
+            <div class="button" id="refresh">
+                <i data-feather="refresh-cw" class="icon"></i>
+                <i data-feather="refresh-cw" class="loading"></i>
+            </div>
         </div>
     </div>
 

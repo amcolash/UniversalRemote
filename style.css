@@ -43,7 +43,24 @@ body {
     padding: 1em;
     margin: 0.8em;
     border-radius: 100%;
+    width: 1.5em;
+    height: 1.5em;
 }
+
+.button .loading {
+    display: none;
+    animation:spin 1s linear infinite;
+}
+
+.button.spin .icon {
+    display: none;
+}
+
+.button.spin .loading {
+    display: inline-block;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
 
 .red {
     stroke: red;
@@ -51,4 +68,8 @@ body {
 
 .green {
     stroke: lime;
+}
+
+#refresh {
+    margin-top: 4em;
 }
