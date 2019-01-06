@@ -11,7 +11,7 @@ self.addEventListener('install', evt => {
 
     // Precache and clean up old caches
     evt.waitUntil(precache());
-    eval.waitUntil(cleanup());
+    evt.waitUntil(cleanup());
 });
 
 // Cache most parts, but fetch from network if not availible locally
