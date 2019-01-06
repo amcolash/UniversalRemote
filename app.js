@@ -66,12 +66,12 @@ function getStatus() {
         computerPower.getElementsByTagName("svg")[0].classList = computerState ? "green" : "red";
         setOnline(true);
 
-        timeout = setTimeout(getStatus, 10000);
+        timeout = setTimeout(getStatus, 15000);
     }).catch(error => {
         console.error(error);
         setOnline(false);
 
-        timeout = setTimeout(getStatus, 10000);
+        timeout = setTimeout(getStatus, 15000);
     });
 }
 
