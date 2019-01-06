@@ -17,6 +17,11 @@ var computerState = false;
 window.onload = init;
 
 function init() {
+    // Setup service worker
+    navigator.serviceWorker.register('service-worker.js', {
+        scope: '/'
+    });
+
     // Setup click handlers
     projectorOn.addEventListener("click", () => { axios.get(server + "/projector_on"); });
     projectorOff.addEventListener("click", () => { axios.get(server + "/projector_off"); });
