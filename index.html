@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Universal Remote</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="online" style="display: none">
+            <div class="section">
+                <h2>Projector</h2>
+                <div class="button" id="projectorOn">
+                    <i data-feather="power" class="green"></i>
+                </div>
+                <div class="button" id="projectorOff">
+                    <i data-feather="power" class="red"></i>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Stereo</h2>
+                <div class="button" id="streroPower">
+                    <i data-feather="power"></i>
+                </div>
+                <div class="button" id="stereoVolumeDown">
+                    <i data-feather="volume-1"></i>
+                </div>
+                <div class="button" id="stereoVolumeUp">
+                    <i data-feather="volume-2"></i>
+                </div>
+            </div>
+        
+            <div class="section">
+                <h2>Computer</h2>
+                <div class="button" id="computerPower">
+                    <i data-feather="power"></i>
+                </div>
+                <!-- Forced for computer? -->
+            </div>
+        </div>
+    
+        <div id="offline" style="display: none">
+            <h2>It looks like you are offline or cannot contact the server :(</h2>
+            <i data-feather="wifi-off"></i>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

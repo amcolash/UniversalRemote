@@ -1,0 +1,39 @@
+html,body, .container {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background-color: #222;
+    color: #eee;
+    font-family: sans-serif;
+    text-align: center;
+    user-select: none;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.section {
+    padding-bottom: 1em;
+}
+
+.button {
+    cursor: pointer;
+    border: 0.2em solid white;
+    display: inline-block;
+    padding: 1em;
+    margin: 0.8em;
+    border-radius: 100%;
+}
+
+.red {
+    stroke: red;
+}
+
+.green {
+    stroke: lime;
+}
