@@ -37,16 +37,28 @@ function init() {
     refresh.addEventListener('click', getStatus);
 
     // Add a hold down timer
-    stereoVolumeUp.onmousedown = () => timer = setTimeout(() => handleVolumeHold(stereoVolumeUp), 1500);
-    stereoVolumeDown.onmousedown = () => timer = setTimeout(() => handleVolumeHold(stereoVolumeDown), 1500);
-    stereoVolumeUp.onmouseup = () => { if (timer) clearTimeout(timer); }
-    stereoVolumeDown.onmouseup = () => { if (timer) clearTimeout(timer); }  
+    stereoVolumeUp.addEventListener("mousedown", onDown);
+    stereoVolumeDown.addEventListener("mousedown", onDown);
+    stereoVolumeUp.addEventListener("touchstart", onDown);
+    stereoVolumeDown.addEventListener("touchstart", onDown);
+    stereoVolumeUp.addEventListener("mouseup", onUp);
+    stereoVolumeDown.addEventListener("mouseup", onUp);
+    stereoVolumeUp.addEventListener("touchend", onUp);
+    stereoVolumeDown.addEventListener("touchend", onUp);
 
     // Render SVG
     feather.replace();
 
     // Poll for status
     getStatus();
+}
+
+function onDown() {
+    setTimeout(() => handleVolumeHold(stereoVolumeUp), 500);
+}
+
+function onUp() {
+    if (timer) clearTimeout(timer);
 }
 
 function handleVolumeHold(button) {
