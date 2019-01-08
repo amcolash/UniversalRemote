@@ -46,6 +46,15 @@ function init() {
     stereoVolumeUp.addEventListener("touchend", onUp);
     stereoVolumeDown.addEventListener("touchend", onUp);
 
+    // Orientation change handling
+    window.onorientationchange = e => {
+        if (window.orientation === -90) {
+            document.documentElement.classList.add("oppositeLandscape");
+        } else {
+            document.documentElement.classList.remove("oppositeLandscape");
+        }
+    };
+
     // Render SVG
     feather.replace();
 
@@ -54,7 +63,7 @@ function init() {
 }
 
 function onDown() {
-    setTimeout(() => handleVolumeHold(stereoVolumeUp), 500);
+    timer = setTimeout(() => handleVolumeHold(stereoVolumeUp), 500);
 }
 
 function onUp() {
