@@ -14,6 +14,7 @@ const refresh = document.getElementById("refresh");
 var onlineState = false;
 var computerState = false;
 var timeout;
+var timer;
 
 // When things load, set things up
 window.onload = init;
@@ -35,11 +36,22 @@ function init() {
     computerPower.addEventListener("click", () => { request(computerState ? "/off" : "/on", computerPower); });
     refresh.addEventListener('click', getStatus);
 
+    // Add a hold down timer
+    stereoVolumeUp.onmousedown = () => timer = setTimeout(() => handleVolumeHold(stereoVolumeUp), 1500);
+    stereoVolumeDown.onmousedown = () => timer = setTimeout(() => handleVolumeHold(stereoVolumeDown), 1500);
+    stereoVolumeUp.onmouseup = () => { if (timer) clearTimeout(timer); }
+    stereoVolumeDown.onmouseup = () => { if (timer) clearTimeout(timer); }  
+
     // Render SVG
     feather.replace();
 
     // Poll for status
     getStatus();
+}
+
+function handleVolumeHold(button) {
+    var volume = prompt("Enter a volume level");
+    if (volume) request("/stereo_volume?volume=" + volume, button);
 }
 
 function request(url, button) {
