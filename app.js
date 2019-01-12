@@ -1,5 +1,7 @@
 const server = "http://home.amcolash.com:3000";
 
+const container = document.getElementsByClassName("container")[0];
+
 const projectorOn = document.getElementById("projectorOn");
 const projectorOff = document.getElementById("projectorOff");
 const stereoPower = document.getElementById("streroPower");
@@ -49,9 +51,9 @@ function init() {
     // Orientation change handling
     window.onorientationchange = e => {
         if (window.orientation === -90) {
-            document.documentElement.classList.add("oppositeLandscape");
+            container.classList.add("oppositeLandscape");
         } else {
-            document.documentElement.classList.remove("oppositeLandscape");
+            container.classList.remove("oppositeLandscape");
         }
     };
 

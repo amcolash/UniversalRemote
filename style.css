@@ -1,20 +1,11 @@
 /* Always keep in portrait mode */
-html.oppositeLandscape {
+.container.oppositeLandscape {
     transform: rotate(90deg);
-    top: -20%;
-    left: 94%;
 }
 
 @media screen and (max-width: 767px) and (orientation: landscape) {
-    html {
-      transform: rotate(-90deg);
-      transform-origin: left top;
-      width: 100vh;
-      height: 100vw !important;
-      overflow-x: hidden;
-      position: absolute;
-      top: 100%;
-      left: 6%;
+    .container {
+        transform: rotate(-90deg);
     }
 }
 
