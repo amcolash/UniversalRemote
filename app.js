@@ -55,6 +55,9 @@ function init() {
         }
     };
 
+    // Refresh on focus (i.e. switch back from another app)
+    window.addEventListener("focus", e => getStatus());
+
     // Render SVG
     feather.replace();
 
@@ -96,7 +99,10 @@ function getStatus() {
 
     axios.get(server).then(response => {
         computerState = response.data.trim() === "Current Status: 1";
-        computerPower.getElementsByTagName("svg")[0].classList = computerState ? "green" : "red";
+        var classList = computerPower.getElementsByTagName("svg")[0].classList;
+        classList.remove("red");
+        classList.remove("green");
+        classList.add(computerState ? "green" : "red");
         setOnline(true);
 
         timeout = setTimeout(getStatus, 15000);
