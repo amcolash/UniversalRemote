@@ -114,13 +114,13 @@ h2 {
 }
 
 .row {
-    padding: 0.35em;
+    padding: 0.5em;
 }
 
 button {
     cursor: pointer;
-    font-size: 0.75em;
-    padding: 0.35em;
+    font-size: 1em;
+    padding: 0.25em;
     border: none;
     border-radius: 0.2em;
     background-color: limegreen;
@@ -136,7 +136,7 @@ input[type=range]:hover {
 input[type=range] {
     appearance: none;
     -webkit-appearance: none;
-    height: 1.25em;
+    height: 1.5em;
     background: #d3d3d3;
     outline: none;
     opacity: 0.9;
@@ -146,8 +146,8 @@ input[type=range] {
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 1.5em;
-    height: 2em;
+    width: 1.75em;
+    height: 2.25em;
     background: limegreen;
     cursor: pointer;
 }
