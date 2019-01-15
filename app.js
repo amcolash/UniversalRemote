@@ -1,22 +1,13 @@
 const server = "http://home.amcolash.com:3000";
 
 const container = document.getElementsByClassName("container")[0];
-
-const projectorOn = document.getElementById("projectorOn");
-const projectorOff = document.getElementById("projectorOff");
-const stereoPower = document.getElementById("streroPower");
-const stereoVolumeDown = document.getElementById("stereoVolumeDown");
-const stereoVolumeUp = document.getElementById("stereoVolumeUp");
-const computerPower = document.getElementById("computerPower");
-
-const onlineEl = document.getElementById("online");
-const offlineEl = document.getElementById("offline");
-const refresh = document.getElementById("refresh");
+const modal = document.getElementById("inputModal");
 
 var onlineState = false;
 var computerState = false;
 var timeout;
-var timer;
+var holdTimer;
+var holdCB;
 
 // When things load, set things up
 window.onload = init;
@@ -35,18 +26,23 @@ function init() {
     stereoPower.addEventListener("click", () => { request("/stereo", stereoPower); });
     stereoVolumeDown.addEventListener("click", () => { request("/stereo_down?volume=-2", stereoVolumeDown); });
     stereoVolumeUp.addEventListener("click", () => { request("/stereo_up?volume=2", stereoVolumeUp); });
+    hdmiDown.addEventListener("click", () => { request("/hdmi_down", hdmiDown); });
+    hdmiUp.addEventListener("click", () => { request("/hdmi_up", hdmiUp); });
     computerPower.addEventListener("click", () => { request(computerState ? "/off" : "/on", computerPower); });
-    refresh.addEventListener('click', getStatus);
+    refresh.addEventListener("click", getStatus);
+    modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.remove("visible"); });
+    modalButton.addEventListener("click", () => {
+        if (holdCB) {
+            holdCB();
+            modal.classList.remove("visible");
+        }
+    });
 
     // Add a hold down timer
-    stereoVolumeUp.addEventListener("mousedown", onDown);
-    stereoVolumeDown.addEventListener("mousedown", onDown);
-    stereoVolumeUp.addEventListener("touchstart", onDown);
-    stereoVolumeDown.addEventListener("touchstart", onDown);
-    stereoVolumeUp.addEventListener("mouseup", onUp);
-    stereoVolumeDown.addEventListener("mouseup", onUp);
-    stereoVolumeUp.addEventListener("touchend", onUp);
-    stereoVolumeDown.addEventListener("touchend", onUp);
+    addHoldListener(stereoVolumeUp, () => handleVolumeHold(stereoVolumeUp));
+    addHoldListener(stereoVolumeDown, () => handleVolumeHold(stereoVolumeDown));
+    addHoldListener(hdmiDown, () => handleHDMIHold(hdmiDown));
+    addHoldListener(hdmiUp, () => handleHDMIHold(hdmiUp));
 
     // Orientation change handling
     window.onorientationchange = e => {
@@ -67,17 +63,29 @@ function init() {
     getStatus();
 }
 
-function onDown() {
-    timer = setTimeout(() => handleVolumeHold(stereoVolumeUp), 500);
-}
-
-function onUp() {
-    if (timer) clearTimeout(timer);
+function addHoldListener(button, cb) {
+    button.addEventListener("mousedown", () => holdTimer = setTimeout(cb, 500));
+    button.addEventListener("touchstart", () => holdTimer = setTimeout(cb, 500));
+    button.addEventListener("mouseup", () => { if (holdTimer) clearTimeout(holdTimer); });
+    button.addEventListener("touchend", () => { if (holdTimer) clearTimeout(holdTimer); });
 }
 
 function handleVolumeHold(button) {
-    var volume = prompt("Enter a volume level");
-    if (volume) request("/stereo_volume?volume=" + volume, button);
+    showModal("Choose a volume level", 0, 30, 15, () => request("/stereo_volume?volume=" + modalValue.value, button));
+}
+
+function handleHDMIHold(button) {
+    showModal("Choose an HDMI channel", 1, 4, 4, () => request("/hdmi?channel=" + modalValue.value, button));
+}
+
+function showModal(message, min, max, current, cb) {
+    modal.classList.add("visible");
+    modalMessage.innerHTML = message;
+    modalValue.min = min;
+    modalValue.max = max;
+    modalValue.value = current;
+    modalDisplay.innerHTML = current;
+    holdCB = cb;
 }
 
 function request(url, button) {
@@ -116,9 +124,9 @@ function getStatus() {
     });
 }
 
-function setOnline(online) {
-    onlineState = online;
-    onlineEl.style.display = online ? "block" : "none";
-    offlineEl.style.display = online ? "none" : "block";
+function setOnline(onlineState) {
+    onlineState = onlineState;
+    online.style.display = online ? "block" : "none";
+    offline.style.display = online ? "none" : "block";
     refresh.classList.remove("spin");
 }

@@ -22,6 +22,10 @@ body {
     user-select: none;
 }
 
+h2 {
+    margin-block-end: 0.3em;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -42,11 +46,16 @@ body {
     border-radius: 100%;
     width: 1.5em;
     height: 1.5em;
+    -webkit-tap-highlight-color: #222;
 }
 
 .button .loading {
     display: none;
     animation:spin 1s linear infinite;
+}
+
+.button .flip {
+    transform: rotate(180deg);
 }
 
 .button.spin .icon {
@@ -69,4 +78,76 @@ body {
 
 #refresh {
     margin-top: 4em;
+}
+
+/* Modal Styling */
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition: opacity 0.5s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal.visible {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.modalContent {
+    font-size: 1.5em;
+    background-color: black;
+    padding: 1em;
+    border: 3px solid white;
+    border-radius: 0.3em;
+}
+
+.row {
+    padding: 0.35em;
+}
+
+button {
+    cursor: pointer;
+    font-size: 0.75em;
+    padding: 0.35em;
+    border: none;
+    border-radius: 0.2em;
+    background-color: limegreen;
+    color: white;
+    text-shadow: 0 0 0.3em #333;
+    padding: 0.35em 1.5em;
+}
+
+input[type=range]:hover {
+    opacity: 1;
+}
+
+input[type=range] {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 1.25em;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.9;
+    transition: opacity .2s;
+}
+  
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.5em;
+    height: 2em;
+    background: limegreen;
+    cursor: pointer;
 }

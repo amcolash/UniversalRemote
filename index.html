@@ -25,7 +25,7 @@
             
             <div class="section">
                 <h2>Stereo</h2>
-                <div class="button" id="streroPower">
+                <div class="button" id="stereoPower">
                     <i data-feather="power" class="icon"></i>
                     <i data-feather="refresh-cw" class="loading"></i>
                 </div>
@@ -35,6 +35,18 @@
                 </div>
                 <div class="button" id="stereoVolumeUp">
                     <i data-feather="volume-2" class="icon"></i>
+                    <i data-feather="refresh-cw" class="loading"></i>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>HDMI</h2>
+                <div class="button" id="hdmiDown">
+                    <i data-feather="triangle" class="icon flip"></i>
+                    <i data-feather="refresh-cw" class="loading"></i>
+                </div>
+                <div class="button" id="hdmiUp">
+                    <i data-feather="triangle" class="icon"></i>
                     <i data-feather="refresh-cw" class="loading"></i>
                 </div>
             </div>
@@ -56,6 +68,18 @@
             <div class="button" id="refresh">
                 <i data-feather="refresh-cw" class="icon"></i>
                 <i data-feather="refresh-cw" class="loading"></i>
+            </div>
+        </div>
+
+        <div class="modal" id="inputModal">
+            <div class="modalContent">
+                <span id="modalMessage">Message</span>
+                <div class="row"></div>
+                <input type="range" min="1" max="4" value="4" id="modalValue" oninput="modalDisplay.value = modalValue.value">
+                <div class="row"></div>
+                <output name="ageOutputName" id="modalDisplay"></output>
+                <div class="row"></div>
+                <button id="modalButton">Ok</button>
             </div>
         </div>
     </div>
