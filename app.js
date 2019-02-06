@@ -20,6 +20,17 @@ function init() {
     //     });
     // }
 
+    // Stop the script kiddies - hopefully, since I really don't care all that much...
+    if (localStorage.getItem("password") === "batman") {
+        container.style.display = "flex";
+    } else {
+        var pass = prompt("Password?");
+        if (pass === "batman") {
+            container.style.display = "flex";
+            localStorage.setItem("password", "batman");
+        }
+    }
+
     // Setup click handlers
     projectorOn.addEventListener("click", () => { request("/projector_on", projectorOn); });
     projectorOff.addEventListener("click", () => { request("/projector_off", projectorOff); });
