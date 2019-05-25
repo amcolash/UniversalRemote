@@ -1,4 +1,4 @@
-const server = "http://home.amcolash.com:3000";
+const server = "https://home.amcolash.com:9000/remote";
 
 const container = document.getElementsByClassName("container")[0];
 const modal = document.getElementById("inputModal");
