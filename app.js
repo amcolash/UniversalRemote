@@ -16,7 +16,7 @@ function init() {
     // Setup service worker
     if (navigator.serviceWorker) {
         navigator.serviceWorker.register('service-worker.js', {
-            scope: '/UniversalRemote/'
+            scope: window.location.pathname
         });
     }
 
@@ -136,9 +136,10 @@ function getStatus() {
     });
 }
 
-function setOnline(onlineState) {
-    onlineState = onlineState;
-    online.style.display = online ? "block" : "none";
-    offline.style.display = online ? "none" : "block";
+function setOnline(newState) {
+    onlineState = newState;
+    online.style.display = newState ? "block" : "none";
+    offline.style.display = newState ? "none" : "block";
     refresh.classList.remove("spin");
+    initialLoad.style.display = "none";
 }

@@ -1,13 +1,13 @@
 var CACHE = 'remote v2';
-var REPO = '/UniversalRemote/';
+var SCOPE = self.registration.scope;
 
 var CACHE_LIST = [
-    REPO,
-    REPO + '/app.js',
-    REPO + '/axios.min.js',
-    REPO + '/feather.min.js',
-    REPO + '/index.html',
-    REPO + '/style.css'
+    SCOPE,
+    SCOPE + '/app.js',
+    SCOPE + '/axios.min.js',
+    SCOPE + '/feather.min.js',
+    SCOPE + '/index.html',
+    SCOPE + '/style.css'
 ];
 
 self.addEventListener('install', evt => {

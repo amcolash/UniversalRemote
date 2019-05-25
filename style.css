@@ -66,6 +66,11 @@ h2 {
     display: inline-block;
 }
 
+#initialLoad .button, #initialLoad .loading {
+    width: 2.5em;
+    height: 2.5em;
+}
+
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
 .red {
