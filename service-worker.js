@@ -2,6 +2,8 @@ var CACHE = 'remote v1';
 
 var CACHE_LIST = [
     '/app.js',
+    '/axios.min.js',
+    '/feather.min.js',
     '/index.html',
     '/style.css'
 ];

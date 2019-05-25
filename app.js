@@ -14,20 +14,21 @@ window.onload = init;
 
 function init() {
     // Setup service worker
-    // if (navigator.serviceWorker) {
-    //     navigator.serviceWorker.register('service-worker.js', {
-    //         scope: '/'
-    //     });
-    // }
+    if (navigator.serviceWorker) {
+        navigator.serviceWorker.register('service-worker.js', {
+            scope: '/'
+        });
+    }
 
     // Stop the script kiddies - hopefully, since I really don't care all that much...
-    if (localStorage.getItem("password") === "batman") {
+    const password = "YmF0bWFu";
+    if (localStorage.getItem("password") === atob(password)) {
         container.style.display = "flex";
     } else {
         var pass = prompt("Password?");
-        if (pass === "batman") {
+        if (pass === atob(password)) {
             container.style.display = "flex";
-            localStorage.setItem("password", "batman");
+            localStorage.setItem("password", atob(password));
         }
     }
 
