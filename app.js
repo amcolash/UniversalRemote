@@ -16,7 +16,7 @@ function init() {
     // Setup service worker
     if (navigator.serviceWorker) {
         navigator.serviceWorker.register('service-worker.js', {
-            scope: '/'
+            scope: '/UniversalRemote/'
         });
     }
 
