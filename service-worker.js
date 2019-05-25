@@ -1,11 +1,13 @@
-var CACHE = 'remote v1';
+var CACHE = 'remote v2';
+var REPO = '/UniversalRemote/';
 
 var CACHE_LIST = [
-    '/app.js',
-    '/axios.min.js',
-    '/feather.min.js',
-    '/index.html',
-    '/style.css'
+    REPO,
+    REPO + '/app.js',
+    REPO + '/axios.min.js',
+    REPO + '/feather.min.js',
+    REPO + '/index.html',
+    REPO + '/style.css'
 ];
 
 self.addEventListener('install', evt => {
