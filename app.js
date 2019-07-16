@@ -141,5 +141,8 @@ function setOnline(newState) {
     online.style.display = newState ? "block" : "none";
     offline.style.display = newState ? "none" : "block";
     refresh.classList.remove("spin");
-    initialLoad.style.display = "none";
+    if (initialLoad) {
+        initialLoad.parentNode.removeChild(initialLoad);
+        initialLoad = undefined;
+    }
 }
