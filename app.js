@@ -161,17 +161,17 @@ function getStatus() {
         timeout = setTimeout(getStatus, 15000);
     });
 
-    // axios.get(ledSpectrum + '/song').then( response => {
-    //     spectrumState = response.data.trim() === "songEnabled: 1";
-    //     var classList = spectrumMusic.getElementsByTagName("svg")[0].classList;
-    //     classList.remove("red");
-    //     classList.remove("green");
-    //     classList.add(spectrumState ? "green" : "red");
-    // });
+    axios.get(ledSpectrum + '/song').then( response => {
+        spectrumState = response.data.trim() === "songEnabled: 1";
+        var classList = spectrumMusic.getElementsByTagName("svg")[0].classList;
+        classList.remove("red");
+        classList.remove("green");
+        classList.add(spectrumState ? "green" : "red");
+    });
 
-    // axios.get(ledSpectrum + '/brightness').then( response => {
-    //     spectrumBrightnessState = response.data;
-    // });
+    axios.get(ledSpectrum + '/brightness').then( response => {
+        spectrumBrightnessState = response.data;
+    });
 }
 
 function setOnline(newState) {
