@@ -1,10 +1,13 @@
-const server = "https://home.amcolash.com:9000/remote";
+const server = 'https://home.amcolash.com:9000/remote';
+const ledSpectrum = 'https://home.amcolash.com:9000/spectrum';
 
 const container = document.getElementsByClassName("container")[0];
 const modal = document.getElementById("inputModal");
 
 var onlineState = false;
 var computerState = false;
+var spectrumState = false;
+var spectrumBrightnessState = -1;
 var timeout;
 var holdTimer;
 var holdCB;
@@ -41,6 +44,8 @@ function init() {
     hdmiDown.addEventListener("click", () => { request("/hdmi_down", hdmiDown); });
     hdmiUp.addEventListener("click", () => { request("/hdmi_up", hdmiUp); });
     computerPower.addEventListener("click", () => { request(computerState ? "/off" : "/on", computerPower); });
+    spectrumBrightness.addEventListener("click", handleSpectrumBirghtness);
+    spectrumMusic.addEventListener("click", () => { requestPost(spectrumState ? "/song?enabled=false" : "/song?enabled=true", spectrumMusic); });
     refresh.addEventListener("click", getStatus);
     modal.addEventListener("click", (e) => { if (e.target === modal) modal.classList.remove("visible"); });
     modalButton.addEventListener("click", () => {
@@ -90,6 +95,13 @@ function handleHDMIHold(button) {
     showModal("Choose an HDMI channel", 1, 4, 4, () => request("/hdmi?channel=" + modalValue.value, button));
 }
 
+function handleSpectrumBirghtness() {
+    showModal("Choose Brightness Level", -1, 255, spectrumBrightnessState, () => {
+        requestPost("/brightness?brightness=" + modalValue.value, spectrumBrightness);
+        getStatus();
+    });
+}
+
 function showModal(message, min, max, current, cb) {
     modal.classList.add("visible");
     modalMessage.innerHTML = message;
@@ -109,6 +121,20 @@ function request(url, button) {
         button.classList.remove("spin");
 
         if (button === computerPower) getStatus();
+    }).catch(error => {
+        button.classList.remove("spin");
+    });
+}
+
+function requestPost(url, button) {
+    // Only do the request if there are no active requests
+    if (document.getElementsByClassName("spin").length > 0) return;
+
+    button.classList.add("spin");
+    axios.post(ledSpectrum + url).then(response => {
+        button.classList.remove("spin");
+
+        if (button === spectrumMusic) getStatus();
     }).catch(error => {
         button.classList.remove("spin");
     });
@@ -134,6 +160,18 @@ function getStatus() {
 
         timeout = setTimeout(getStatus, 15000);
     });
+
+    // axios.get(ledSpectrum + '/song').then( response => {
+    //     spectrumState = response.data.trim() === "songEnabled: 1";
+    //     var classList = spectrumMusic.getElementsByTagName("svg")[0].classList;
+    //     classList.remove("red");
+    //     classList.remove("green");
+    //     classList.add(spectrumState ? "green" : "red");
+    // });
+
+    // axios.get(ledSpectrum + '/brightness').then( response => {
+    //     spectrumBrightnessState = response.data;
+    // });
 }
 
 function setOnline(newState) {
