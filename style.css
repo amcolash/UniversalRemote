@@ -1,158 +1,165 @@
 /* Always keep in portrait mode */
 .container.oppositeLandscape {
-    transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 
 @media screen and (max-width: 767px) and (orientation: landscape) {
-    .container {
-        transform: rotate(-90deg);
-    }
+  .container {
+    transform: rotate(-90deg);
+  }
 }
 
-html, body, .container {
-    height: 100%;
-    margin: 0;
+html,
+body,
+.container {
+  height: 100%;
+  margin: 0;
 }
 
 body {
-    background-color: #222;
-    color: #eee;
-    font-family: sans-serif;
-    text-align: center;
-    user-select: none;
+  background-color: #222;
+  color: #eee;
+  font-family: sans-serif;
+  text-align: center;
+  user-select: none;
 }
 
 h2 {
-    margin-block-end: 0.2em;
+  margin-block-end: 0.2em;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 1em;
 }
 
 .section {
-    padding-bottom: 0.35em;
+  padding-bottom: 0.35em;
 }
 
 .button {
-    cursor: pointer;
-    border: 0.2em solid white;
-    display: inline-block;
-    padding: 0.8em;
-    margin: 0.7em;
-    border-radius: 100%;
-    width: 1.5em;
-    height: 1.5em;
-    -webkit-tap-highlight-color: #222;
+  cursor: pointer;
+  border: 0.2em solid white;
+  display: inline-block;
+  padding: 0.8em;
+  margin: 0.7em;
+  border-radius: 100%;
+  width: 1.5em;
+  height: 1.5em;
+  -webkit-tap-highlight-color: #222;
 }
 
 .button .loading {
-    display: none;
-    animation:spin 1s linear infinite;
+  display: none;
+  animation: spin 1s linear infinite;
 }
 
 .button .flip {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .button.spin .icon {
-    display: none;
+  display: none;
 }
 
 .button.spin .loading {
-    display: inline-block;
+  display: inline-block;
 }
 
-#initialLoad .button, #initialLoad .loading {
-    width: 2.5em;
-    height: 2.5em;
+#initialLoad .button,
+#initialLoad .loading {
+  width: 2.5em;
+  height: 2.5em;
 }
 
-@keyframes spin { 100% { transform: rotate(360deg); } }
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 .red {
-    stroke: red;
+  stroke: red;
 }
 
 .green {
-    stroke: lime;
+  stroke: lime;
 }
 
 #refresh {
-    margin-top: 4em;
+  margin-top: 4em;
 }
 
 /* Modal Styling */
 
 .modal {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.65);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-    transition: opacity 0.5s;
-    opacity: 0;
-    pointer-events: none;
+  transition: opacity 0.5s;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .modal.visible {
-    pointer-events: auto;
-    opacity: 1;
+  pointer-events: auto;
+  opacity: 1;
 }
 
 .modalContent {
-    font-size: 1.5em;
-    background-color: black;
-    padding: 1em;
-    border: 0.1em solid white;
-    border-radius: 0.3em;
+  font-size: 1.5em;
+  background-color: black;
+  padding: 1em;
+  border: 0.1em solid white;
+  border-radius: 0.3em;
 }
 
 .row {
-    padding: 0.5em;
+  padding: 0.5em;
 }
 
 button {
-    cursor: pointer;
-    font-size: 1em;
-    padding: 0.25em;
-    border: none;
-    border-radius: 0.2em;
-    background-color: limegreen;
-    color: white;
-    text-shadow: 0 0 0.3em #333;
-    padding: 0.35em 1.5em;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0.25em;
+  border: none;
+  border-radius: 0.2em;
+  background-color: limegreen;
+  color: white;
+  text-shadow: 0 0 0.3em #333;
+  padding: 0.35em 1.5em;
 }
 
-input[type=range]:hover {
-    opacity: 1;
+input[type='range']:hover {
+  opacity: 1;
 }
 
-input[type=range] {
-    appearance: none;
-    -webkit-appearance: none;
-    height: 1.5em;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.9;
-    transition: opacity .2s;
+input[type='range'] {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 1.5em;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.9;
+  transition: opacity 0.2s;
 }
-  
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 1.75em;
-    height: 2.25em;
-    background: limegreen;
-    cursor: pointer;
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.75em;
+  height: 2.25em;
+  background: limegreen;
+  cursor: pointer;
 }

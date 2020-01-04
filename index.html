@@ -1,110 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Universal Remote</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="container" style="display: none">
-        <div id="online" style="display: none">
-            <div class="section">
-                <h2>Projector</h2>
-                <div class="button" id="projectorOn">
-                    <i data-feather="power" class="green icon"></i>
-                    <i data-feather="refresh-cw" class="loading"></i>
-                </div>
-                <div class="button" id="projectorOff">
-                    <i data-feather="power" class="red icon"></i>
-                    <i data-feather="refresh-cw" class="loading"></i>
-                </div>
-            </div>
-            
-            <div class="section">
-                <h2>Stereo</h2>
-                <div class="button" id="stereoPower">
-                    <i data-feather="power" class="icon"></i>
-                    <i data-feather="refresh-cw" class="loading"></i>
-                </div>
-                <div class="button" id="stereoVolumeDown">
-                    <i data-feather="volume-1" class="icon"></i>
-                    <i data-feather="refresh-cw" class="loading"></i>
-                </div>
-                <div class="button" id="stereoVolumeUp">
-                    <i data-feather="volume-2" class="icon"></i>
-                    <i data-feather="refresh-cw" class="loading"></i>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>HDMI</h2>
-                <div class="button" id="hdmiDown">
-                    <i data-feather="triangle" class="icon flip"></i>
-                    <i data-feather="refresh-cw" class="loading"></i>
-                </div>
-                <div class="button" id="hdmiUp">
-                    <i data-feather="triangle" class="icon"></i>
-                    <i data-feather="refresh-cw" class="loading"></i>
-                </div>
-            </div>
-        
-            <div class="section">
-                <h2>Computer</h2>
-                <div class="button" id="computerPower">
-                    <i data-feather="power" class="icon"></i>
-                    <i data-feather="refresh-cw" class="loading"></i>
-                </div>
-                <!-- Forced for computer? -->
-            </div>
-
-            <div class="section">
-                <h2>LED Spectrum</h2>
-                <div class="button" id="spectrumBrightness">
-                    <i data-feather="sun" class="icon"></i>
-                    <i data-feather="refresh-cw" class="loading"></i>
-                </div>
-                <div class="button" id="spectrumMusic">
-                    <i data-feather="headphones" class="icon"></i>
-                    <i data-feather="refresh-cw" class="loading"></i>
-                </div>
-            </div>
-        </div>
-    
-        <div id="offline" style="display: none">
-            <h1>It looks like you are offline or cannot contact the server :(</h1>
-            <i data-feather="wifi-off" width="4.5em" height="4.5em"></i>
-            <br>
-            <div class="button" id="refresh">
-                <i data-feather="refresh-cw" class="icon"></i>
-                <i data-feather="refresh-cw" class="loading"></i>
-            </div>
+      <div id="online" style="display: none">
+        <div class="section">
+          <h2>Projector</h2>
+          <div class="button" id="projectorOn">
+            <i data-feather="power" class="green icon"></i>
+            <i data-feather="refresh-cw" class="loading"></i>
+          </div>
+          <div class="button" id="projectorOff">
+            <i data-feather="power" class="red icon"></i>
+            <i data-feather="refresh-cw" class="loading"></i>
+          </div>
         </div>
 
-        <div id="initialLoad">
-            <div class="button spin" style="border: none;">
-                <i data-feather="refresh-cw" class="loading"></i>
-            </div>
+        <div class="section">
+          <h2>Stereo</h2>
+          <div class="button" id="stereoPower">
+            <i data-feather="power" class="icon"></i>
+            <i data-feather="refresh-cw" class="loading"></i>
+          </div>
+          <div class="button" id="stereoVolumeDown">
+            <i data-feather="volume-1" class="icon"></i>
+            <i data-feather="refresh-cw" class="loading"></i>
+          </div>
+          <div class="button" id="stereoVolumeUp">
+            <i data-feather="volume-2" class="icon"></i>
+            <i data-feather="refresh-cw" class="loading"></i>
+          </div>
         </div>
 
-        <div class="modal" id="inputModal">
-            <div class="modalContent">
-                <span id="modalMessage">Message</span>
-                <div class="row"></div>
-                <output name="ageOutputName" id="modalDisplay"></output>
-                <div class="row"></div>
-                <input type="range" min="1" max="4" value="4" id="modalValue" oninput="modalDisplay.value = modalValue.value">
-                <div class="row"></div>
-                <div class="row"></div>
-                <button id="modalButton">Ok</button>
-            </div>
+        <div class="section">
+          <h2>HDMI</h2>
+          <div class="button" id="hdmiDown">
+            <i data-feather="triangle" class="icon flip"></i>
+            <i data-feather="refresh-cw" class="loading"></i>
+          </div>
+          <div class="button" id="hdmiUp">
+            <i data-feather="triangle" class="icon"></i>
+            <i data-feather="refresh-cw" class="loading"></i>
+          </div>
         </div>
+
+        <div class="section">
+          <h2>Computer</h2>
+          <div class="button" id="computerPower">
+            <i data-feather="power" class="icon"></i>
+            <i data-feather="refresh-cw" class="loading"></i>
+          </div>
+          <!-- Forced for computer? -->
+        </div>
+
+        <div class="section">
+          <h2>LED Spectrum</h2>
+          <div class="button" id="spectrumBrightness">
+            <i data-feather="sun" class="icon"></i>
+            <i data-feather="refresh-cw" class="loading"></i>
+          </div>
+          <div class="button" id="spectrumMusic">
+            <i data-feather="headphones" class="icon"></i>
+            <i data-feather="refresh-cw" class="loading"></i>
+          </div>
+        </div>
+      </div>
+
+      <div id="offline" style="display: none">
+        <h1>It looks like you are offline or cannot contact the server :(</h1>
+        <i data-feather="wifi-off" width="4.5em" height="4.5em"></i>
+        <br />
+        <div class="button" id="refresh">
+          <i data-feather="refresh-cw" class="icon"></i>
+          <i data-feather="refresh-cw" class="loading"></i>
+        </div>
+      </div>
+
+      <div id="initialLoad">
+        <div class="button spin" style="border: none;">
+          <i data-feather="refresh-cw" class="loading"></i>
+        </div>
+      </div>
+
+      <div class="modal" id="inputModal">
+        <div class="modalContent">
+          <span id="modalMessage">Message</span>
+          <div class="row"></div>
+          <output name="ageOutputName" id="modalDisplay"></output>
+          <div class="row"></div>
+          <input type="range" min="1" max="4" value="4" id="modalValue" oninput="modalDisplay.value = modalValue.value" />
+          <div class="row"></div>
+          <div class="row"></div>
+          <button id="modalButton">Ok</button>
+        </div>
+      </div>
     </div>
 
     <script src="feather.min.js"></script>
     <script src="axios.min.js"></script>
     <script src="app.js"></script>
-</body>
+  </body>
 </html>
