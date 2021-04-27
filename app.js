@@ -19,7 +19,7 @@ async function init() {
   // Setup service worker
   if (navigator.serviceWorker) {
     navigator.serviceWorker.register('service-worker.js', {
-      scope: window.location.pathname
+      scope: window.location.pathname,
     });
   }
 
@@ -42,8 +42,11 @@ async function init() {
   projectorOff.addEventListener('click', () => {
     request('/projector_off', projectorOff);
   });
-  stereoPower.addEventListener('click', () => {
-    request('/stereo', stereoPower);
+  stereoOn.addEventListener('click', () => {
+    request('/stereo_on', stereoOn);
+  });
+  stereoOff.addEventListener('click', () => {
+    request('/stereo_off', stereoOff);
   });
   stereoVolumeDown.addEventListener('click', () => {
     request('/stereo_down?volume=-2', stereoVolumeDown);
@@ -65,7 +68,7 @@ async function init() {
     requestPost(spectrumState ? '/song?enabled=false' : '/song?enabled=true', spectrumMusic);
   });
   refresh.addEventListener('click', getStatus);
-  modal.addEventListener('click', e => {
+  modal.addEventListener('click', (e) => {
     if (e.target === modal) modal.classList.remove('visible');
   });
   modalButton.addEventListener('click', () => {
@@ -82,7 +85,7 @@ async function init() {
   addHoldListener(hdmiUp, () => handleHDMIHold(hdmiUp));
 
   // Orientation change handling
-  window.onorientationchange = e => {
+  window.onorientationchange = (e) => {
     if (window.orientation === -90) {
       container.classList.add('oppositeLandscape');
     } else {
@@ -91,7 +94,7 @@ async function init() {
   };
 
   // Refresh on focus (i.e. switch back from another app)
-  window.addEventListener('focus', e => getStatus());
+  window.addEventListener('focus', (e) => getStatus());
 
   // Render SVG
   feather.replace();
@@ -146,12 +149,12 @@ function request(url, button) {
   button.classList.add('spin');
   axios
     .get(server + url)
-    .then(response => {
+    .then((response) => {
       button.classList.remove('spin');
 
       if (button === computerPower) getStatus();
     })
-    .catch(error => {
+    .catch((error) => {
       button.classList.remove('spin');
     });
 }
@@ -163,11 +166,11 @@ function requestPost(url, button) {
   button.classList.add('spin');
   axios
     .post(ledSpectrum + url)
-    .then(response => {
+    .then((response) => {
       if (button === spectrumMusic) getSpectrumMusic(button);
       if (button === spectrumBrightness) getSpectrumBrightness(button);
     })
-    .catch(error => {
+    .catch((error) => {
       button.classList.remove('spin');
     });
 }
@@ -179,7 +182,7 @@ function getStatus() {
 
   axios
     .get(server)
-    .then(response => {
+    .then((response) => {
       computerState = response.data.trim() === 'Current Status: 1';
       var classList = computerPower.getElementsByTagName('svg')[0].classList;
       classList.remove('red');
@@ -189,7 +192,7 @@ function getStatus() {
 
       timeout = setTimeout(getStatus, 15000);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
       setOnline(false);
 
@@ -200,11 +203,11 @@ function getStatus() {
 function getSpectrumBrightness(button) {
   return axios
     .get(ledSpectrum + '/brightness')
-    .then(response => {
+    .then((response) => {
       spectrumBrightnessState = response.data;
       if (button) button.classList.remove('spin');
     })
-    .catch(err => {
+    .catch((err) => {
       if (button) button.classList.remove('spin');
     });
 }
@@ -212,7 +215,7 @@ function getSpectrumBrightness(button) {
 function getSpectrumMusic(button) {
   return axios
     .get(ledSpectrum + '/song')
-    .then(response => {
+    .then((response) => {
       spectrumState = response.data.trim() === 'songEnabled: 1';
       const classList = spectrumMusic.getElementsByTagName('svg')[0].classList;
       classList.remove('red');
@@ -220,7 +223,7 @@ function getSpectrumMusic(button) {
       classList.add(spectrumState ? 'green' : 'red');
       if (button) button.classList.remove('spin');
     })
-    .catch(err => {
+    .catch((err) => {
       if (button) button.classList.remove('spin');
     });
 }
