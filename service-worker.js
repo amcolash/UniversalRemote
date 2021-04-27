@@ -1,52 +1,61 @@
-var CACHE = 'remote v2';
-var SCOPE = self.registration.scope;
+// From https://serviceworke.rs/strategy-cache-and-update.html
 
-var CACHE_LIST = [
+const CACHE = 'cache-and-update';
+const CACHE_LIST = [
   SCOPE,
   SCOPE + '/app.js',
   SCOPE + '/axios.min.js',
   SCOPE + '/feather.min.js',
   SCOPE + '/index.html',
-  SCOPE + '/style.css'
+  SCOPE + '/style.css',
 ];
 
-self.addEventListener('install', evt => {
+// On install, cache some resources.
+self.addEventListener('install', function (evt) {
   console.log('The service worker is being installed.');
 
-  // Precache and clean up old caches
+  // Ask the service worker to keep installing until the returning promise
+  // resolves.
   evt.waitUntil(precache());
-  evt.waitUntil(cleanup());
 });
 
-// Cache most parts, but fetch from network if not availible locally
-self.addEventListener('fetch', evt => {
-  let request = evt.request;
-
-  evt.respondWith(
-    caches.match(request).then(matching => {
-      return matching || fetch(request);
-    })
-  );
+// On fetch, use cache but update the entry with the latest contents
+// from the server.
+self.addEventListener('fetch', function (evt) {
+  console.log('The service worker is serving the asset.');
+  // You can use `respondWith()` to answer immediately, without waiting for the
+  // network response to reach the service worker...
+  evt.respondWith(fromCache(evt.request));
+  // ...and `waitUntil()` to prevent the worker from being killed until the
+  // cache is updated.
+  evt.waitUntil(update(evt.request));
 });
 
+// Open a cache and use `addAll()` with an array of assets to add all of them
+// to the cache. Return a promise resolving when all the assets are added.
 function precache() {
-  return caches.open(CACHE).then(cache => {
+  return caches.open(CACHE).then(function (cache) {
     return cache.addAll(CACHE_LIST);
   });
 }
 
-// Wipe no longer useful caches
-function cleanup() {
-  return caches.keys().then(cacheNames => {
-    return Promise.all(
-      cacheNames
-        .filter(cacheName => {
-          return cacheName !== CACHE;
-        })
-        .map(cacheName => {
-          console.log('Deleting old service worker cache', cacheName);
-          return caches.delete(cacheName);
-        })
-    );
+// Open the cache where the assets were stored and search for the requested
+// resource. Notice that in case of no matching, the promise still resolves
+// but it does with `undefined` as value.
+function fromCache(request) {
+  return caches.open(CACHE).then(function (cache) {
+    return cache.match(request).then(function (matching) {
+      return matching || Promise.reject('no-match');
+    });
+  });
+}
+
+// Update consists in opening the cache, performing a network request and
+// storing the new response data.
+function update(request) {
+  return caches.open(CACHE).then(function (cache) {
+    return fetch(request).then(function (response) {
+      return cache.put(request, response);
+    });
   });
 }
