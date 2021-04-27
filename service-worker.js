@@ -1,6 +1,8 @@
 // From https://serviceworke.rs/strategy-cache-and-update.html
 
-const CACHE = 'cache-and-update';
+const CACHE = 'universal-remote';
+
+const SCOPE = self.registration.scope;
 const CACHE_LIST = [
   SCOPE,
   SCOPE + '/app.js',
