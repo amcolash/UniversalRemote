@@ -1,4 +1,4 @@
-var CACHE = 'remote v3';
+var CACHE = 'remote v4';
 var SCOPE = self.registration.scope;
 
 var CACHE_LIST = [
@@ -27,7 +27,9 @@ self.addEventListener('fetch', (evt) => {
       // Always try to grab newer versions of cached files, but do not block
       if (matching) {
         fetch(request).then(function (response) {
-          cache.put(request, response);
+          caches.open(CACHE).then((cache) => {
+            cache.put(request, response);
+          });
         });
       }
 
