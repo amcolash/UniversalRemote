@@ -4,18 +4,18 @@ const ledSpectrum = 'https://home.amcolash.com:9000/spectrum';
 const container = document.getElementsByClassName('container')[0];
 const modal = document.getElementById('inputModal');
 
-var onlineState = false;
-var computerState = false;
-var spectrumState = false;
-var spectrumBrightnessState = -1;
-var timeout;
-var holdTimer;
-var holdCB;
+let onlineState = false;
+let computerState = false;
+let spectrumState = false;
+let spectrumBrightnessState = -1;
+let timeout;
+let holdTimer;
+let holdCB;
 
 // When things load, set things up
 window.onload = init;
 
-async function init() {
+function init() {
   // Setup service worker
   if (navigator.serviceWorker) {
     navigator.serviceWorker.register('service-worker.js', {
@@ -28,7 +28,7 @@ async function init() {
   if (localStorage.getItem('password') === atob(password)) {
     container.style.display = 'flex';
   } else {
-    var pass = prompt('Password?');
+    const pass = prompt('Password?');
     if (pass === atob(password)) {
       container.style.display = 'flex';
       localStorage.setItem('password', atob(password));
@@ -63,6 +63,13 @@ async function init() {
   computerPower.addEventListener('click', () => {
     request(computerState ? '/off' : '/on', computerPower);
   });
+  spectrumPower.addEventListener('click', () => {
+    if (spectrumBrightnessState === -1) {
+      requestPost('/brightness?brightness=1', spectrumPower);
+    } else {
+      requestPost('/brightness?brightness=-1', spectrumPower);
+    }
+  });
   spectrumBrightness.addEventListener('click', handleSpectrumBirghtness);
   spectrumMusic.addEventListener('click', () => {
     requestPost(spectrumState ? '/song?enabled=false' : '/song?enabled=true', spectrumMusic);
@@ -94,17 +101,22 @@ async function init() {
   };
 
   // Refresh on focus (i.e. switch back from another app)
-  window.addEventListener('focus', (e) => getStatus());
+  window.addEventListener('visibilitychange', (e) => {
+    if (!document.hidden) updateData();
+  });
 
   // Render SVG
   feather.replace();
 
-  // Poll for status
-  getStatus();
+  // Update all status data
+  updateData();
+}
 
-  // Wait for the first request before asking for more data to prevent bottleneck
+async function updateData() {
+  // Wait for the each status request before asking for more data to prevent bottlenecks
+  await getStatus();
   await getSpectrumBrightness();
-  getSpectrumMusic();
+  await getSpectrumMusic();
 }
 
 function addHoldListener(button, cb) {
@@ -169,6 +181,7 @@ function requestPost(url, button) {
     .then((response) => {
       if (button === spectrumMusic) getSpectrumMusic(button);
       if (button === spectrumBrightness) getSpectrumBrightness(button);
+      if (button === spectrumPower) getSpectrumBrightness(button);
     })
     .catch((error) => {
       button.classList.remove('spin');
@@ -180,11 +193,11 @@ function getStatus() {
 
   refresh.classList.add('spin');
 
-  axios
+  return axios
     .get(server)
     .then((response) => {
       computerState = response.data.trim() === 'Current Status: 1';
-      var classList = computerPower.getElementsByTagName('svg')[0].classList;
+      const classList = computerPower.getElementsByTagName('svg')[0].classList;
       classList.remove('red');
       classList.remove('green');
       classList.add(computerState ? 'green' : 'red');
@@ -205,6 +218,12 @@ function getSpectrumBrightness(button) {
     .get(ledSpectrum + '/brightness')
     .then((response) => {
       spectrumBrightnessState = response.data;
+
+      const classList = spectrumPower.getElementsByTagName('svg')[0].classList;
+      classList.remove('red');
+      classList.remove('green');
+      classList.add(spectrumBrightnessState === -1 || spectrumBrightnessState > 1 ? 'green' : 'red');
+
       if (button) button.classList.remove('spin');
     })
     .catch((err) => {
