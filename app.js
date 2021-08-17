@@ -1,5 +1,5 @@
-const server = 'https://home.amcolash.com:9000/remote';
-const ledSpectrum = 'https://home.amcolash.com:9000/spectrum';
+const server = 'https://home.amcolash.com:9090/remote';
+const ledSpectrum = 'https://home.amcolash.com:9090/spectrum';
 
 const container = document.getElementsByClassName('container')[0];
 const modal = document.getElementById('inputModal');
