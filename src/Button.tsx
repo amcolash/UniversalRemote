@@ -1,11 +1,19 @@
 import React from 'react';
-import { style } from 'typestyle';
+import { keyframes, style } from 'typestyle';
+import { FiRefreshCw } from 'react-icons/fi';
 
 import { iconSize } from './util';
 
+export enum ButtonStatus {
+  Neutral,
+  On,
+  Off,
+  Loading,
+}
+
 interface ButtonProps {
   icon: JSX.Element;
-  state: 'neutral' | 'on' | 'off';
+  status: ButtonStatus;
   onClick?: () => void;
   onHold?: () => void;
 }
@@ -22,12 +30,29 @@ const buttonStyle = style({
   justifyContent: 'center',
 });
 
+const rotationAnimation = keyframes({
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' },
+});
+
+const rotatingStyle = style({
+  animationName: rotationAnimation,
+  animationDuration: '2s',
+  animationIterationCount: 'infinite',
+  animationTimingFunction: 'linear',
+});
+
 export function Button(props: ButtonProps): React.ReactElement {
-  const color = props.state === 'neutral' ? 'white' : props.state === 'off' ? 'red' : 'lime';
+  const color =
+    props.status === ButtonStatus.Neutral || props.status === ButtonStatus.Loading
+      ? 'white'
+      : props.status === ButtonStatus.Off
+      ? 'red'
+      : 'lime';
 
   return (
     <button className={buttonStyle} onClick={props.onClick} style={{ color }}>
-      {props.icon}
+      {props.status === ButtonStatus.Loading ? <FiRefreshCw size={`calc(${iconSize} * 0.85)`} className={rotatingStyle} /> : props.icon}
     </button>
   );
 }
