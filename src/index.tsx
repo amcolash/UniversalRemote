@@ -6,4 +6,9 @@ import { App } from './App';
 
 cssRule('body', { margin: 0, background: '#222', color: 'white', fontFamily: 'sans-serif' });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
